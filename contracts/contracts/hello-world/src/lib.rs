@@ -4,10 +4,9 @@
 
 use soroban_sdk::{contract, contractimpl, storage::Persistent, token, Address, Env, Symbol};
 
-// Storage keys for persisting state parameters on the ledger
 
 const CLIENT: Symbol = Symbol::short("CLIENT");
-const FREELANCER: Symbol = Symbol::short("FREE"); // Note: .short() string values have a max length limitation of 9 characters
+const FREELANCER: Symbol = Symbol::short("FREE"); 
 const ARBITER: Symbol = Symbol::short("ARBITER");
 const TOKEN_ID: Symbol = Symbol::short("TOKEN_ID");
 const AMOUNT: Symbol = Symbol::short("AMOUNT");
@@ -19,7 +18,6 @@ pub struct MilestoneEscrow;
 
 #[contractimpl]
 impl MilestoneEscrow {
-    /// Initializes the contract state and transfers the escrow amount from the client into the contract.
     pub fn initialize(
         env: Env,
         client: Address,
@@ -111,7 +109,6 @@ impl MilestoneEscrow {
         token_client.transfer(&env.current_contract_address(), &pay_to, &amount);
     }
 
-    /// Public read-only helper method for the Next.js UI to quickly ascertain current state metrics
     pub fn get_status(env: Env) -> u32 {
         env.storage().persistent().get(&STATUS).unwrap_or(0u32)
     }
